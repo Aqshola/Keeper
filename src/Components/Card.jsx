@@ -4,12 +4,28 @@ import {
   CardContent,
   Typography,
   CardActions,
-  Button,
+  IconButton,
+  Icon,
+  makeStyles,
 } from "@material-ui/core";
 import Modal from "./Modal";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+const customStyle = makeStyles((theme) => ({
+  card: {
+    padding: theme.spacing(1),
+    borderRadius: "15px",
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
+}));
 
 export default function CardCom({ id, title, content }) {
+  const classes = customStyle();
   const [open, setopen] = useState(false);
+  const [shadow, setshadow] = useState(false);
+
   const handleDelete = () => {
     fetch("http://localhost:5000/Notes", {
       method: "DELETE",
@@ -25,28 +41,35 @@ export default function CardCom({ id, title, content }) {
       .then((res) => {
         console.log(res);
       });
+    setopen(false);
   };
 
+  const mouseOver = () => setshadow(true);
+  const mouseOut = () => setshadow(false);
   const handleView = () => {
     setopen(true);
   };
   const handleCLose = () => {
     setopen(false);
+    setshadow(false);
   };
+
   return (
-    <Card>
-      <CardContent>
+    <Card
+      className={classes.card}
+      onMouseOver={mouseOver}
+      onMouseOut={mouseOut}
+      raised={shadow}
+    >
+      <CardContent onClick={handleView}>
         <Typography variant="h5">{title}</Typography>
         <Typography>{content}</Typography>
       </CardContent>
-      <CardActions>
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
-          Delete
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleView}>
-          View
-        </Button>
-      </CardActions>
+
+      <IconButton onClick={handleDelete} onMouseOver={() => setopen(false)}>
+        <DeleteIcon />
+      </IconButton>
+
       <Modal
         open={open}
         close={handleCLose}

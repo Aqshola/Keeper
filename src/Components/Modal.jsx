@@ -82,12 +82,14 @@ export default function Modal({
 
   return (
     <Dialog open={open} fullWidth={true}>
-      <DialogTitle>Input Memories</DialogTitle>
       <DialogContent dividers>
         <TextField
           placeholder="Title memories"
           name="title"
-          InputProps={{ classes }}
+          InputProps={{
+            style: { fontSize: 20 },
+            disableUnderline: true,
+          }}
           onChange={handleChange}
           variant="standard"
           defaultValue={deftitle}
@@ -104,12 +106,7 @@ export default function Modal({
         />
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" onClick={close}>
-          cancel
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Save
-        </Button>
+        <Button onClick={handleSubmit}>Close</Button>
       </DialogActions>
     </Dialog>
   );

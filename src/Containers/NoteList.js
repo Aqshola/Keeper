@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles, Typography, Box } from "@material-ui/core";
 import CardCom from "../Components/Card";
 
 const style = {
@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
   notfound: {
     textAlign: "center",
+    opacity: "30%",
+    width: "100%",
   },
 }));
 
@@ -34,9 +36,9 @@ export default function NoteList(params) {
   const conditionalRender = () => {
     if (notes.length === 0) {
       return (
-        <Typography className={classes.notfound} variant="h3">
-          Empty
-        </Typography>
+        <Box className={classes.notfound}>
+          <Typography variant="h3">Empty</Typography>
+        </Box>
       );
     } else {
       return notes.map((note, i) => {
